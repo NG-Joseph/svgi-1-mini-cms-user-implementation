@@ -73,7 +73,7 @@ export class UserService {
      * find all and return only code and name along with profile relation
      */
     async findAll(): Promise<User[]> {
-        return await this.userRepository.find({select: ["firstName", "lastName"], relations: ["profile"]});
+        return await this.userRepository.find({select: ["id", "lastName"], relations: ["profile"]});
     }
     
     //4. Etc. See https://typeorm.io/#/find-options
