@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/create/create-User.dto';
 import { UpdateUserDto } from './dto/update/update-User.dto';
 import { Profile } from './modules/profile/models/profile.entity';
 import { User } from './models/User.entity';
+import { FindOneParams } from './validators/params.validator';
 
 @Injectable()
 export class UserService {
@@ -83,7 +84,7 @@ export class UserService {
      * @param id 
      * find by id
      */
-    async findOne(id: string): Promise<User> {
+    async findOne(id: number): Promise<User> {
         return await this.userRepository.findOne(id);
     }
     
@@ -92,7 +93,7 @@ export class UserService {
      * @param id 
      * Finds by a criterion (id in this case) and deletes. Returns void
      */
-    async delete(id: string): Promise<void> {
+    async delete(id: FindOneParams): Promise<void> {
         await this.userRepository.delete(id);
     }
 
@@ -112,7 +113,7 @@ export class UserService {
      * @param User 
      * Find by the id and replace the fields sent in Dto
      */
-    async update1(id: string, User: UpdateUserDto): Promise<UpdateResult> {
+    async update1(id: FindOneParams, User: UpdateUserDto): Promise<UpdateResult> {
         return await this.userRepository.update(id, { ...User })
     }
 

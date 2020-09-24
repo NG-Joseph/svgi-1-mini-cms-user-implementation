@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { UpdateResult } from 'typeorm/query-builder/result/UpdateResult';
 import { CreateUserDto } from './dto/create/create-User.dto';
 import { UpdateUserDto } from './dto/update/update-User.dto';
 import { User } from './models/User.entity';
 import { UserService } from './User.service';
+import {FindOneParams} from './validators/params.validator'
 
 @Controller('user')
 export class UserController {
