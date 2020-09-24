@@ -41,7 +41,7 @@ export class UserController {
      * Handle Get request for find by id
      */
     @Get(':id')
-    findOne(@Param('id') id: string): Promise<User> {
+    findOne(@Param('id', ParseIntPipe) id: number): Promise<User> {
         return this.UserService.findOne(id);
     }
 
@@ -52,7 +52,7 @@ export class UserController {
      * Handle Put request for 
      */
     @Put(':id')
-    partialUpdate(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+    partialUpdate(@Param('id') id: FindOneParams, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
         return this.UserService.update1(id, updateUserDto);
     }
 
