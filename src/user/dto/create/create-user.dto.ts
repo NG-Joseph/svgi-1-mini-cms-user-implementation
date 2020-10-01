@@ -2,6 +2,7 @@ import { CreateBaseAbstractDto } from "src/global/create-base-abstract.dto"
 import { Profile } from "src/user/modules/profile/models/profile.entity";
 import { Role } from "src/user/modules/role/models/role.entity";
 import { IsEmail, IsNotEmpty } from "class-validator";
+import { FindOneParams } from 'src/user/validators/params.validator';
 
 
 export class CreateUserDto extends CreateBaseAbstractDto{
