@@ -14,7 +14,8 @@ import {DatabaseModule} from './app.database.module'
 @Module({
   imports: [ UserModule, 
 
-    ConfigModule.forRoot({
+    ConfigModule.forRoot(),
+    /*ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
         POSTGRES_PORT: Joi.number().required(),
@@ -23,7 +24,7 @@ import {DatabaseModule} from './app.database.module'
         POSTGRES_DB: Joi.string().required(),
         PORT: Joi.number(),
       })
-    }),
+    }),*/
     DatabaseModule
   ],
   controllers: [AppController],

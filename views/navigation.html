@@ -1,14 +1,16 @@
 <!-- using bulma classes. See https://bulma.io/documentation/components/navbar/-->
 
-<nav class="navbar is-black" role="navigation" aria-label="main navigation">
+<nav class="navbar is-tab" role="navigation" aria-label="main navigation">
   <!--navbar-brand is for the logo and hamburger menu for narrow screens-->
-  <div class="container"> <!-- This makes the navigator left and right align with other containers in the page-->
+  <div class="container">
+    <!-- This makes the navigator left and right align with other containers in the page-->
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
         <img src="/public/img/piosystems-logo.png">
       </a>
       <!--Notice the data-target below in the hamburger menu. Set is-active when on mobile-->
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="bookExampleMenu">
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+        data-target="bookExampleMenu">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -18,9 +20,10 @@
     <div id="bookExampleMenu" class="navbar-menu">
       <!--navbar-start below is for a set of menu items that are left oriented-->
       <div class="navbar-start">
-        
-        <a class="navbar-item {{'navbar-item-active' if TenantsActive else ''}}" {{'' if TenantsActive else 'href=/user/web'}}>
-          Users Admin
+
+        <a class="navbar-item {{'navbar-item-active' if TenantsActive else ''}}"
+          {{'' if TenantsActive else 'href=/user/web'}}>
+          User Admin
         </a>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
@@ -39,10 +42,13 @@
       <!--navbar-end below is for a set of menu items that are right oriented-->
       <div class="navbar-end">
         <div class="buttons">
-            <a class="button is-dark">
-              Log in
-            </a>
-          </div>
+          <a class="button is-primary">
+            Log in
+          </a>
+          <a class="button is-info" id="toggle-theme">
+            Toggle Theme
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -58,7 +64,7 @@
     if ($navbarBurgers.length > 0) {
 
       // Add a click event on each of them
-      $navbarBurgers.forEach( el => {
+      $navbarBurgers.forEach(el => {
         el.addEventListener('click', () => {
 
           // Get the target from the "data-target" attribute
@@ -74,5 +80,78 @@
     }
 
   });
+
+</script>
+<script>
+  //This flag really should be on the server side for those logged in. User object can include darkTheme of boolean type
+  const overrideSystemTheme = false; 
+  // Select the button
+  const btn = document.querySelector("#toggle-theme");
+    // Select the stylesheet <link>
+  const theme = document.querySelector("#theme-link");
+
+  const themeURLRoot = '/public/css/default-theme';
+
+  if (overrideSystemTheme){
+    
+    //First check to see if there is a system setting for theme dark/light mode
+    let systemThemeSetting = '';
+    if (window.matchMedia){
+      systemThemeSetting = window.matchMedia('(prefers-color-scheme: dark)').matches? "dark": "light" 
+    } 
+
+    // Select the theme preference from localStorage
+    const storedTheme = localStorage.getItem("theme")
+    const currentTheme = storedTheme? storedTheme : systemThemeSetting; //systemThemeSetting is default
+
+    // If the current theme in localStorage is "dark"...
+    if (currentTheme == "dark") {
+      // ...then use the .dark-theme class
+      theme.href = themeURLRoot + "/dark-theme.min.css";
+    }else{
+      theme.href = themeURLRoot + "/light-theme.min.css";  
+    }
+  }
+    // Listen for a click on the button 
+    btn.addEventListener("click", function() {
+      //Below is one way to toggle and save in localStorage
+      const theme = document.querySelector("#theme-link");
+
+      if ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) && theme.getAttribute("href") == themeURLRoot + "/sgvi-1-mini-cms.min.css") {
+        alert('dark matches')
+        theme.href = themeURLRoot + "/light-theme.min.css";
+      }else if (theme.getAttribute("href") == themeURLRoot + "/dark-theme.min.css") {  
+        // dark mode is on. Switch to light mode
+        //alert('dark matches')
+        theme.href = themeURLRoot + "/light-theme.min.css";
+      }else{
+        //switch to dark mode
+        //alert('light matches')
+        theme.href = themeURLRoot + "/dark-theme.min.css";
+      }
+/*
+      if (theme.getAttribute("href") == themeURLRoot + "/light-theme.min.css") {
+        // ... then switch it to "dark-theme.css"
+        theme.href = themeURLRoot + "/dark-theme.min.css";
+        // Otherwise...
+      } else {
+        // ... switch it to "light-theme.css"
+        theme.href = themeURLRoot + "/light-theme.min.css";
+      }
+*/
+
+      
+      // Let's say the theme is equal to light
+      let currentTheme = "light";
+      // If the body contains the .dark-theme class...
+      if (theme.getAttribute("href") == themeURLRoot + "/dark-theme.min.css") {
+        // ...then let's make the theme dark
+        currentTheme = "dark";
+      }
+      // Then save the choice in localStorage
+      localStorage.setItem("theme", currentTheme);
+    });
+
+  
   
 </script>
