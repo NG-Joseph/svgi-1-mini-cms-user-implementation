@@ -5,11 +5,11 @@ import { AppService } from './app.service';
 
 //Below is Pius modification to include fastify point-of-view view which is the equivalent of eclipse render
 import { Reply } from './global/custom.interfaces';
-//import App from './clients_dev/tenant-react-web-client/src/App';
+//import App from './clients_dev/user-react-web-client/src/App';
 
 import renderEngine from './global/render.engine';
 
-//import App from './clients/tenant-react-web-client/src/App';
+//import App from './clients/user-react-web-client/src/App';
 
 @Controller()
 export class AppController {

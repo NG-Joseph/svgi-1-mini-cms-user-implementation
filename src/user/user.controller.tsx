@@ -11,7 +11,7 @@ import { Reply } from 'src/global/custom.interfaces';
 import App from '../client_dev/user-react-web-client/src/App';
 import * as React from 'react';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
 
     /**
