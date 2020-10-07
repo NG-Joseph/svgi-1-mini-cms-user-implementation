@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { User } from "./user.entity";
 
 @Entity()
-export class Profile extends BaseAbstractEntity{
+export class customProfile extends BaseAbstractEntity{
 
     @Column()
     name: string

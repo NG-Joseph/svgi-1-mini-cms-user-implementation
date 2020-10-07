@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
+import { UsersWithCount } from 'src/global/custom.interfaces';
 import { Repository, UpdateResult } from 'typeorm';
-import { CreateUserDto } from './dto/create/create-User.dto';
-import { UpdateUserDto } from './dto/update/update-User.dto';
-import { Profile } from './modules/profile/models/profile.entity';
-import { User } from './models/User.entity';
-import { FindOneParams } from './validators/params.validator';
+import { CreateUserDto } from './dto/create/create-user.dto';
+import { UpdateUserDto } from './dto/update/update-user.dto';
+import { customProfile } from './models/custom-profile.entity';
+import { User } from './models/user.entity';
+//import { FindOneParams } from './validators/params.validator';
 
 @Injectable()
 export class UserService {
@@ -14,11 +15,11 @@ export class UserService {
     /**
      * 
      * @param userRepository 
-     * @param profileRepository 
+     * @param customProfileRepository 
      */
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>,
-        @InjectRepository(Profile) private profileRepository: Repository<Profile>
+        @InjectRepository(customProfile) private customProfileRepository: Repository<customProfile>
     ){}
 
     /**
@@ -26,20 +27,20 @@ export class UserService {
      * @param createUserDto 
      * 
      */
-    //create below assumes that User model does not allow cascade create of custom theme
+    //create below assumes that user model does not allow cascade create of custom theme
     /*
     async create (createUserDto: CreateUserDto): Promise<User>{
 
-        const newprofile = this.profileRepository.create(createUserDto.profile)
-        const profile = await this.profileRepository.save(newprofile);
+        const newcustomProfile = this.customProfileRepository.create(createUserDto.customTheme)
+        const customTheme = await this.customProfileRepository.save(newcustomProfile);
 
 
-        const newItem = this.UserRepository.create(createUserDto);
+        const newItem = this.userRepository.create(createUserDto);
         //associate the custom theme created above with newItem before saving
-        newItem.profile = profile;
+        newItem.customTheme = customTheme;
 
         
-        return this.UserRepository.save(newItem);
+        return this.userRepository.save(newItem);
     }
     */
 
@@ -57,25 +58,33 @@ export class UserService {
     /**
      * See https://typeorm.io/#/find-options
      */
-    /*
-    async findAll(): Promise<User[]> {
-        return await this.UserRepository.find();
+    
+    async findAllWithOptions(findOptions: string): Promise<UsersWithCount> {
+        const [users, count] = await this.userRepository.findAndCount(JSON.parse(findOptions));
+        return {users,count};
     }
-    */
+
+    async findAll(): Promise<UsersWithCount> {
+        const [users, count] = await this.userRepository.findAndCount();
+        return {users, count}
+    }
+    
     
     //2. Note: You can indicate the fields to be returned
     /*
     async findAll(): Promise<User[]> {
-        return await this.UserRepository.find({select: ["code", "name"]});
+        return await this.userRepository.find({select: ["code", "name"]});
     }*/
 
     //3. For relations, you can specify relations to be included in return
     /**
-     * find all and return only code and name along with profile relation
+     * find all and return only code and name along with customTheme relation
      */
+    /*
     async findAll(): Promise<User[]> {
-        return await this.userRepository.find({select: ["id", "lastName"], relations: ["profile"]});
+        return await this.userRepository.find({select: ["code", "name"], relations: ["customTheme"]});
     }
+    */
     
     //4. Etc. See https://typeorm.io/#/find-options
 
@@ -93,37 +102,48 @@ export class UserService {
      * @param id 
      * Finds by a criterion (id in this case) and deletes. Returns void
      */
+    /* FindOneParams not working well. Using ParseIntPipe
     async delete(id: FindOneParams): Promise<void> {
+        await this.userRepository.delete(id);
+    }
+    */
+    async delete(id: number): Promise<void> {
         await this.userRepository.delete(id);
     }
 
     /**
      * 
-     * @param User 
+     * @param user 
      * Remove the User specifed. Returns User removed.
      */
-    async remove(User: User): Promise<User> {
-        return await this.userRepository.remove(User);
+    async remove(user: User): Promise<User> {
+        return await this.userRepository.remove(user);
     }
 
     //partial update
     /**
      * 
      * @param id 
-     * @param User 
+     * @param user 
      * Find by the id and replace the fields sent in Dto
      */
-    async update1(id: FindOneParams, User: UpdateUserDto): Promise<UpdateResult> {
-        return await this.userRepository.update(id, { ...User })
+    /*
+    /* FindOneParams not working well. Using ParseIntPipe
+    async update1(id: FindOneParams, user: UpdateUserDto): Promise<UpdateResult> {
+        return await this.userRepository.update(id, { ...user })
+    }
+    */
+    async update1(id: number, user: UpdateUserDto): Promise<UpdateResult> {
+        return await this.userRepository.update(id, { ...user })
     }
 
     /**
      * 
-     * @param User 
-     * No partial update allowed here. Saves the User object supplied
+     * @param user 
+     * No partial update allowed here. Saves the user object supplied
      */
-    async update2(User: User): Promise<User> {
-        return await this.userRepository.save(User)
+    async update2(user: User): Promise<User> {
+        return await this.userRepository.save(user)
     }
 
 

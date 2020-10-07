@@ -55,7 +55,7 @@ async function bootstrap() {
     
   //await app.listen(3000);
   //For fastify, include 0.0.0.0 to listen on all IPs on the system. Otherwise, fastify will only listen on localhost.
-  await app.listen(3000, '0.0.0.0');
+  await app.listen(3008, '0.0.0.0');
 
   //More NOTES about fastify use: See https://docs.nestjs.com/techniques/performance for redirect and options
   console.log(`Application is running on: ${await app.getUrl()}`);

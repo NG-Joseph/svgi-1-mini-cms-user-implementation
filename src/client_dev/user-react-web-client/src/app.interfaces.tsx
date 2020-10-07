@@ -10,7 +10,7 @@ export interface IBaseAbstract {
     deletedBy?: string;
 }
 
-export interface ICustomTheme extends IBaseAbstract{
+export interface IProfile extends IBaseAbstract{
     name?: string;
     description?: string;
     properties?: string;
@@ -44,7 +44,7 @@ export interface IUser extends IBaseAbstract{
      otpSecret?: string;
     // profile?: Profile;
     // role?: Role;
-     customTheme?: ICustomTheme;
+     customTheme?: IProfile;
      [key: string]: any
     
 

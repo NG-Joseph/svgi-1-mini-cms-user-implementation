@@ -1,25 +1,26 @@
-import { Res, Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { UpdateResult } from 'typeorm/query-builder/result/UpdateResult';
-import { CreateUserDto } from './dto/create/create-User.dto';
-import { UpdateUserDto } from './dto/update/update-User.dto';
-import { User } from './models/User.entity';
-import { UserService } from './User.service';
-import {FindOneParams} from './validators/params.validator'
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, Res } from '@nestjs/common';
 import { renderToNodeStream } from 'react-dom/server';
-import renderEngine from 'src/global/render.engine';
-import { Reply } from 'src/global/custom.interfaces';
 import App from '../client_dev/user-react-web-client/src/App';
 import * as React from 'react';
+import { Reply, UsersWithCount } from 'src/global/custom.interfaces';
+import renderEngine from 'src/global/render.engine';
+import { UpdateResult } from 'typeorm/query-builder/result/UpdateResult';
+import { CreateUserDto } from './dto/create/create-user.dto';
+import { UpdateUserDto } from './dto/update/update-user.dto';
+import { User } from './models/user.entity';
+import { UserService } from './user.service';
+//import { FindOneParams } from './validators/params.validator';
+
 
 @Controller('users')
 export class UserController {
 
     /**
      * 
-     * @param UserService 
-     * Inject UserService
+     * @param userService 
+     * Inject userService
      */
-    constructor(private readonly UserService: UserService) { }
+    constructor(private readonly userService: UserService) { }
 
     /**
      * 
@@ -29,16 +30,47 @@ export class UserController {
     @Post()
     create(@Body() createUserDto: CreateUserDto): Promise<User> {
         //console.log(JSON.stringify(createUserDto));
-        return this.UserService.create(createUserDto);
+        try{
+            return this.userService.create(createUserDto);
+        }catch(error){
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error: `There was a problem with user creation: ${error.message}`,
+              }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
     }
 
     /**
      * Handle Get request for find
      */
     @Get()
-    findAll(): Promise<User[]> {
-        return this.UserService.findAll();
+    findAll(@Query() query: string): Promise<UsersWithCount> {
+        for (const queryKey of Object.keys(query)) {
+            if(queryKey == "findOptions"){
+                try{
+                    return this.userService.findAllWithOptions(decodeURI(query[queryKey]));
+                } catch (error){
+                    //throw new HttpException('Forbidden', HttpStatus.NOT_FOUND);
+                    throw new HttpException({
+                        status: HttpStatus.INTERNAL_SERVER_ERROR,
+                        error: `There was a problem accessing users data: ${error.message}`,
+                      }, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+                
+            }
+        }
+        try{
+            return this.userService.findAll();
+        }catch(error){
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error: `There was a problem accessing users data: ${error.message}`,
+              }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
     }
+    
 
     /**
      * 
@@ -47,28 +79,73 @@ export class UserController {
      */
     @Get(':id')
     findOne(@Param('id', ParseIntPipe) id: number): Promise<User> {
-        return this.UserService.findOne(id);
+        
+        try{
+            return this.userService.findOne(id);
+        }catch(error){
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error: `There was a problem accessing user data: ${error.message}`,
+              }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
     }
 
     /**
      * 
-     * @param id id of User to be updated
+     * @param id id of user to be updated
      * @param updateUserDto new content
      * Handle Put request for 
      */
+    /* FindOneParams not working well. Using ParseIntPipe
     @Put(':id')
-    partialUpdate(@Param('id') id: FindOneParams, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
-        return this.UserService.update1(id, updateUserDto);
+    partialUpdate(@Param('id', ParseIntPipe) id: FindOneParams, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+        return this.userService.update1(id, updateUserDto);
+    }
+    */
+    @Put(':id')
+    partialUpdate(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+        
+        try{
+            return this.userService.update1(id, updateUserDto);
+        }catch(error){
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error: `There was a problem updating user data: ${error.message}`,
+              }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
     }
 
     /**
      * 
-     * @param User 
-     * Non-partial update. Takes a full User without param.
+     * @param user 
+     * Non-partial update. Takes a full user without param.
      */
     @Put()
-    update(@Body() User: User): Promise<User> {
-        return this.UserService.update2(User);
+    update(@Body() user: User): Promise<User> {
+        
+        try{
+            return this.userService.update2(user);
+        }catch(error){
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error: `There was a problem updating user data: ${error.message}`,
+              }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Delete(':id')
+    delete(@Param('id', ParseIntPipe) id: number) {
+        //throw new HttpException('Forbidden', HttpStatus.NOT_FOUND);
+        try{
+            return this.userService.delete(id);
+        }catch(error){
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error: `There was a problem deleting user data: ${error.message}`,
+              }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Get('web')
@@ -81,12 +158,13 @@ export class UserController {
         Just using below string as an illustration placeholder for now. The real value will be 
         when we implement Authentication and Authorization.
         The token will contain whatever data you want to pass but in base64 digest format.
+        For example, UserInfo, Roles, ThemeContext values, etc.
         */
         const initialProps = {jwtToken : "put-the-token-string-here-if-any"};        
 
 
         const beforeStream = renderEngine().render('users/before-react-stream.fragment.html', 
-            { title: 'User Administration', userActive: true })
+            { title: 'Users Admin', UsersActive: true })
 
         const afterStream = renderEngine().render('users/after-react-stream.fragment.html', 
             { initialProps: JSON.stringify(initialProps) })
@@ -108,4 +186,3 @@ export class UserController {
     }
 
 }
-
