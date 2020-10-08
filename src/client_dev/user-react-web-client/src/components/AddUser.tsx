@@ -77,19 +77,19 @@ const AddUser: React.FC<Props> = (props) => {
                         <div className="field">
                             <label className="label">First Name</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="Name" name="code" value={user.firstName} onChange={onChange} required/>
+                                <input className="input" type="text" placeholder="Name" name="firstName" value={user.firstName} onChange={onChange} required/>
                             </div>
                         </div>
                         <div className="field">
                             <label className="label">Last Name</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="Last name" name="name" value={user.lastName} onChange={onChange} required/>
+                                <input className="input" type="text" placeholder="Last Name" name="lastName" value={user.lastName} onChange={onChange} required/>
                             </div>
                         </div>
                         <div className="field">
                             <label className="label">Gender</label>
                             <div className="control">
-                                <select className="input" placeholder="gender" value={user.gender} onChange={onChange} required>
+                                <select className="input" placeholder="gender" name="gender" value={user.gender} onChange={onChange} required>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                    
@@ -100,14 +100,14 @@ const AddUser: React.FC<Props> = (props) => {
                         <div className="field">
                             <label className="label">Email</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="Email Address" name="contactFirstName" value={user.primaryEmailAddress} onChange={onChange} required/>
+                                <input className="input" type="text" placeholder="Email Address" name="primaryEmailAddress" value={user.primaryEmailAddress} onChange={onChange} required/>
                             </div>
                             <p className="help is-info">Enter a valid email here</p>
                         </div>
                         <div className="field">
                             <label className="label">Date Of Birth</label>
                             <div className="control">
-                            <input className="input" type="date" name="dateOfBirth" value={(typeof(user.dateOfBirth)== "string" ) ? Date.parse(user.dateOfBirth) : undefined} onChange={onChange}/>
+                            <input className="input" type="date" name="dateOfBirth"  value={(typeof(user.dateOfBirth)== "string" ) ? Date.parse(user.dateOfBirth) : undefined} onChange={onChange}/>
                             </div>
                         </div>
                      
