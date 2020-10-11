@@ -6,6 +6,7 @@ import { FindOneParams } from 'src/user/validators/params.validator';
 
 
 export class CreateUserDto extends CreateBaseAbstractDto{
+
     @IsNotEmpty()
     readonly firstName: string;
     @IsNotEmpty()

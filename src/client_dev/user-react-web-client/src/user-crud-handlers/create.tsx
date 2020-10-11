@@ -8,7 +8,7 @@ export const handleCreateUser = async (userToCreate: IUser, dispatch: React.Disp
     try {
         //I have left a number of init options commented out rather than not have then at, so you can know about them
         //see https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch for info on these options
-        const response = await fetch('/users',
+        const response = await fetch('http://127.0.0.1:3008/users',
             {
                 method: 'POST',
                 //mode: 'cors', // no-cors, *cors, same-origin
@@ -23,9 +23,13 @@ export const handleCreateUser = async (userToCreate: IUser, dispatch: React.Disp
                 body: JSON.stringify(userToCreate) // body data type must match "Content-Type" header
 
             });
+            console.log(typeof(userToCreate))
+            console.log(response)
+            console.log(userToCreate)
         if (!response.ok) throw new Error(response.statusText);//confirm that response is OK, else throw error
         //Response is ok. Proceed!
         const userCreated: IUser = await response.json();
+        
 
         //useReducer to dispatch successful user creation, sending userCreated as payload.
         dispatch({ type: 'CreateUserSuccess', payload: { user: userCreated } });

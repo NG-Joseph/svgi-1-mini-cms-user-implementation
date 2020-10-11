@@ -13,18 +13,20 @@ const EditUser: React.FC<Props> = (props) => {
 
     const initialUserState: IUser = {
         id: props.user.id,
-        code: props.user.code,
-        name: props.user.name,
-        contactFirstName: props.user.contactFirstName,
-        contactLastName: props.user.contactLastName,
-        contactTitle: props.user.contactTitle,
-        address: props.user.address,
-        email: props.user.email,
-        defaultURLSlug: props.user.defaultURLSlug,
-        customURLSlug: props.user.customURLSlug,
-        dateOfRegistration: props.user.dateOfRegistration,
-        active: props.user.active,
-        primaryEmailVerificationToken: props.user.primaryEmailVerificationToken,
+        firstName: props.user.firstName,
+        middleName: props.user.middleName,
+        lastName: props.user.lastName,
+        commonName: props.user.commonName,
+        gender: props.user.gender,
+        dateOfBirth: props.user.dateOfBirth,
+        primaryEmailAddress: props.user.primaryEmailAddress,
+        isPrimaryEmailAddressVerified: props.user.isPrimaryEmailAddressVerified,
+        passwordSalt: props.user.passwordSalt,
+        passwordHash: props.user.passwordHash,
+        isPasswordChangeRequired: props.user.isPasswordChangeRequired,
+        resetPasswordToken: props.user.resetPasswordToken,
+        otpSecret:props.user.otpSecret,
+        primaryEmailVerificationToken:props.user.primaryEmailVerificationToken,
         otpEnabled:props.user.otpEnabled
         /*
         customTheme: {
@@ -99,14 +101,14 @@ const EditUser: React.FC<Props> = (props) => {
                     <div className="field">
                         <label className="label">Email</label>
                         <div className="control">
-                            <input className="input" type="text" placeholder="Email Address" name="contactFirstName" value={user.primaryEmailAddress} onChange={onChange} required/>
+                            <input className="input" type="email" placeholder="Email Address" name="primaryEmailAddress" value={user.primaryEmailAddress} onChange={onChange} required/>
                         </div>
                         <p className="help is-info">Enter a valid email here</p>
                     </div>
                     <div className="field">
-                        <label className="label">Date Of Birth</label>
+                        <label className="label">Password</label>
                         <div className="control">
-                        <input className="input" type="date" name="dateOfBirth" value={(typeof(user.dateOfBirth)== "string" ) ? Date.parse(user.dateOfBirth) : undefined} onChange={onChange}/>
+                        <input className="input" type="password" name="passwordSalt"  value={user.passwordSalt} onChange={onChange}/>
                         </div>
                     </div>
                  

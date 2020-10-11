@@ -20,46 +20,46 @@ export class User extends BaseAbstractEntity{
     @Column()
     lastName: string
 
-    @Column()
+    @Column({nullable:true})
     commonName: string
 
     @Column()
     gender: string
 
-    @Column()
+    @Column({default:"2018-09-10 18:41:02.36"})
     dateOfBirth: Date
 
-    @Column({default: false})
+    @Column({default: false, nullable:true})
     isActive: boolean
 
     @Column()
     primaryEmailAddress: string
 
-    @Column()
+    @Column({nullable:true})
     isPrimaryEmailAddressVerified: boolean
 
     @Column()
     passwordSalt: string
 
-    @Column()
+    @Column({nullable:true})
     passwordHash: string;
 
-    @Column({default:false})
+    @Column({default:false, nullable:true})
     isPasswordChangeRequired: boolean
 
-    @Column({unique:true})
+    @Column({unique:true, nullable:true})
     resetPasswordToken: string
 
-    @Column()
+    @Column({nullable:true})
     resetPasswordExpiration: Date
 
-    @Column()
+    @Column({nullable:true})
     primaryEmailVerificationToken: string
 
-    @Column({default:false})
+    @Column({default:false, nullable:true})
     otpEnabled: boolean
 
-    @Column()   
+    @Column({nullable:true})   
     otpSecret: string
 
     @JoinColumn()

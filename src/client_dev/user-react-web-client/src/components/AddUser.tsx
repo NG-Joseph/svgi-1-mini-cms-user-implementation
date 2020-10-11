@@ -30,7 +30,7 @@ const AddUser: React.FC<Props> = (props) => {
         otpEnabled: false,
         otpSecret: '',
  
-        customTheme: {
+        profile: {
             name: '',
             description: '',
             properties: '',
@@ -105,9 +105,9 @@ const AddUser: React.FC<Props> = (props) => {
                             <p className="help is-info">Enter a valid email here</p>
                         </div>
                         <div className="field">
-                            <label className="label">Date Of Birth</label>
+                            <label className="label">Password</label>
                             <div className="control">
-                            <input className="input" type="date" name="dateOfBirth"  value={(typeof(user.dateOfBirth)== "string" ) ? Date.parse(user.dateOfBirth) : undefined} onChange={onChange}/>
+                            <input className="input" type="password" name="passwordSalt"  value={user.passwordSalt} onChange={onChange}/>
                             </div>
                         </div>
                      

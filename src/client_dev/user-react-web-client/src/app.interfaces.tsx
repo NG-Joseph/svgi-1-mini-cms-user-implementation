@@ -30,7 +30,7 @@ export interface IUser extends IBaseAbstract{
      lastName?: string;
      commonName?: string;
      gender?: string;
-     dateOfBirth?: Date | string ;
+     dateOfBirth?: Date ;
      isActive?: boolean;
      primaryEmailAddress?: string;
      isPrimaryEmailAddressVerified?: boolean;
@@ -44,7 +44,7 @@ export interface IUser extends IBaseAbstract{
      otpSecret?: string;
     // profile?: Profile;
     // role?: Role;
-     customTheme?: IProfile;
+     profile?: IProfile;
      [key: string]: any
     
 

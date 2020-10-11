@@ -33,7 +33,7 @@ const User: React.FC<Props> = ({user}) => {
             <td>{user.lastName}</td>
             <td>{user.gender}</td>
             <td>{user.primaryEmailAddress}</td>
-            <td>{user.dateOfBirth}</td>
+            <td>{user.passwordSalt}</td>
             <td>
                 
                 <div className="buttons are-small">
