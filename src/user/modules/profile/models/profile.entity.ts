@@ -7,16 +7,16 @@ import { Role } from "../../role/models/role.entity";
 @Entity()
 export class Profile extends BaseAbstractEntity{
 
-    @Column()
+    @Column({nullable: true})
     homeAdress: string
 
-    @Column()
+    @Column({nullable: true})
     Nationality: string
     
-    @Column()
+    @Column({nullable: true})
     stateOfOrigin: string
 
-    @Column()
+    @Column({nullable: true})
     photo: string   //photo ID or url
 
     @Column("simple-json", {nullable: true})

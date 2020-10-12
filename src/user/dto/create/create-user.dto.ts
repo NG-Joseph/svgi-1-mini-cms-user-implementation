@@ -7,40 +7,40 @@ import { FindOneParams } from 'src/user/validators/params.validator';
 
 export class CreateUserDto extends CreateBaseAbstractDto{
 
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly firstName: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly middleName: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly lastName: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly commonName: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly gender: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly dateOfBirth: Date;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly isActive: boolean;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     @IsEmail()
     readonly primaryEmailAddress: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly isPrimaryEmailAddressVerified: boolean;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly passwordSalt: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly passwordHash: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly isPasswordChangeRequired: boolean;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly resetPasswordToken: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly resetPasswordExpiration: Date;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly primaryEmailVerificationToken: string;
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly otpEnabled: boolean
-    @IsNotEmpty()
+   // @IsNotEmpty()
     readonly otpSecret: string
     readonly profile: Profile
     readonly role: Role

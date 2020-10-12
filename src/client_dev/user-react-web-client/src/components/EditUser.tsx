@@ -78,19 +78,19 @@ const EditUser: React.FC<Props> = (props) => {
                     <div className="field">
                         <label className="label">First Name</label>
                         <div className="control">
-                            <input className="input" type="text" placeholder="Name" name="code" value={user.firstName} onChange={onChange} required/>
+                            <input className="input" type="text" placeholder="Name" name="firstName" value={user.firstName} onChange={onChange} required/>
                         </div>
                     </div>
                     <div className="field">
                         <label className="label">Last Name</label>
                         <div className="control">
-                            <input className="input" type="text" placeholder="Last name" name="name" value={user.lastName} onChange={onChange} required/>
+                            <input className="input" type="text" placeholder="Last name" name="lastName" value={user.lastName} onChange={onChange} required/>
                         </div>
                     </div>
                     <div className="field">
                         <label className="label">Gender</label>
                         <div className="control">
-                            <select className="input" placeholder="gender" value={user.gender} onChange={onChange} required>
+                            <select className="input" placeholder="Gender" name="gender" value={user.gender} onChange={onChange} required>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                

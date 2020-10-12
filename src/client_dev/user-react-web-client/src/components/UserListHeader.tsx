@@ -13,7 +13,7 @@ const UserListHeader: React.FC = () => {
           <th>Last Name</th>
           <th>Gender</th>
           <th>Email</th>
-          <th>Date Of Birth</th>
+          <th>Password Salt</th>
 
       </tr>
     </thead>

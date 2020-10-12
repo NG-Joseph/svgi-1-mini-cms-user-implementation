@@ -47,7 +47,7 @@ export class User extends BaseAbstractEntity{
     @Column({default:false, nullable:true})
     isPasswordChangeRequired: boolean
 
-    @Column({unique:true, nullable:true})
+    @Column({ nullable:true})
     resetPasswordToken: string
 
     @Column({nullable:true})
